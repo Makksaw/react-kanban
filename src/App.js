@@ -1,5 +1,6 @@
 import { useState } from "react"
 import { v4 as uuidv4 } from "uuid"
+import { FaTrashAlt } from "react-icons/fa"
 import "./App.css"
 
 const columns = [
@@ -40,10 +41,6 @@ function App() {
   const [newTask, setNewTask] = useState("")
   const [draggedTask, setDraggedTask] = useState({})
 
-  function deleteTask(id) {
-    setTasks(tasks.filter((task) => task.id !== id))
-  }
-
   function handleSubmitTask(e) {
     e.preventDefault()
 
@@ -56,13 +53,16 @@ function App() {
     setDraggedTask(task)
   }
 
-  function dropTask(e, status) {
-    e.preventDefault()
+  function dropTask(status) {
     setTasks(
       tasks.map((task) => {
         return task.id === draggedTask.id ? { ...task, status } : task
       }),
     )
+  }
+
+  function deleteTask(id) {
+    setTasks(tasks.filter((task) => task.id !== id))
   }
 
   return (
@@ -87,7 +87,7 @@ function App() {
               className="column"
               key={column.id}
               onDragOver={(e) => e.preventDefault()}
-              onDrop={(e) => dropTask(e, column.id)}
+              onDrop={() => dropTask(column.id)}
             >
               <h2>{column.title}</h2>
               <div className="tasks">
@@ -105,6 +105,14 @@ function App() {
             </div>
           )
         })}
+      </div>
+
+      <div
+        className="delete-area"
+        onDragOver={(e) => e.preventDefault()}
+        onDrop={() => deleteTask(draggedTask.id)}
+      >
+        <FaTrashAlt />
       </div>
     </div>
   )
