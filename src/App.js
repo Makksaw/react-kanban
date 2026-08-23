@@ -1,42 +1,12 @@
 import { useState } from "react"
 import { v4 as uuidv4 } from "uuid"
 import { FaTrashAlt } from "react-icons/fa"
+import tasksData from "./data/tasks"
+import columns from "./data/columns"
 import "./App.css"
 
-const columns = [
-  { id: "todo", title: "Todo" },
-  { id: "progress", title: "In Progress" },
-  { id: "done", title: "Done" },
-]
-
 function App() {
-  const [tasks, setTasks] = useState([
-    {
-      id: uuidv4(),
-      title: "Learn React",
-      status: "todo",
-    },
-    {
-      id: uuidv4(),
-      title: "Feed Cat",
-      status: "progress",
-    },
-    {
-      id: uuidv4(),
-      title: "Learn TypeScript",
-      status: "done",
-    },
-    {
-      id: uuidv4(),
-      title: "Create new project",
-      status: "todo",
-    },
-    {
-      id: uuidv4(),
-      title: "Go for a walk",
-      status: "progress",
-    },
-  ])
+  const [tasks, setTasks] = useState(tasksData)
 
   const [newTask, setNewTask] = useState("")
   const [draggedTask, setDraggedTask] = useState({})
@@ -79,9 +49,7 @@ function App() {
 
       <div className="columns">
         {columns.map((column) => {
-          const filteredColumnTasks = tasks.filter(
-            (task) => task.status === column.id,
-          )
+          const columnTasks = tasks.filter((task) => task.status === column.id)
           return (
             <div
               className="column"
@@ -91,7 +59,7 @@ function App() {
             >
               <h2>{column.title}</h2>
               <div className="tasks">
-                {filteredColumnTasks.map((task) => (
+                {columnTasks.map((task) => (
                   <div
                     className="task"
                     key={task.id}
