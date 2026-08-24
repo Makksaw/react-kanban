@@ -1,6 +1,7 @@
 import { useState } from "react"
 import { v4 as uuidv4 } from "uuid"
 import { FaTrashAlt } from "react-icons/fa"
+import { RxDragHandleDots1 } from "react-icons/rx"
 import tasksData from "./data/tasks"
 import columns from "./data/columns"
 import "./App.css"
@@ -67,6 +68,7 @@ function App() {
                     onDragStart={() => dragStartTask(task)}
                   >
                     <span>{task.title}</span>
+                    <RxDragHandleDots1 />
                   </div>
                 ))}
               </div>
