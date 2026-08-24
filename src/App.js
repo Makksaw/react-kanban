@@ -146,6 +146,12 @@ function App() {
                               →
                             </button>
                           )}
+                          <div
+                            className="task-delete-btn"
+                            onClick={() => deleteTask(task.id)}
+                          >
+                            <FaTrashAlt />
+                          </div>
                         </>
                       ) : (
                         <RxDragHandleDots1 />
