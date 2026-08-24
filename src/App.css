@@ -1,37 +1,83 @@
+@import url("https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@500&display=swap");
+
 * {
   box-sizing: border-box;
 }
 
 body {
   margin: 0;
-  font-family: Arial, sans-serif;
-  background: #111;
-  color: white;
+  font-family: "Inter", Arial, sans-serif;
+  background: #15161a;
+  background-image:
+    radial-gradient(
+      circle at 15% 0%,
+      rgba(232, 163, 61, 0.06),
+      transparent 40%
+    ),
+    radial-gradient(
+      circle at 85% 100%,
+      rgba(93, 141, 168, 0.05),
+      transparent 40%
+    );
+  color: #f2f0eb;
+  -webkit-font-smoothing: antialiased;
 }
 
 .app {
   max-width: 1200px;
   margin: 0 auto;
-  padding: 40px 20px;
+  padding: 48px 24px 80px;
 }
 
-h1 {
-  text-align: center;
-  margin-bottom: 30px;
+/* Page title — targets the top-level h2 without touching .column h2 */
+.app > h2 {
+  font-family: "Space Grotesk", sans-serif;
+  font-size: 28px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  margin: 0 0 28px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.app > h2::before {
+  content: "";
+  width: 10px;
+  height: 10px;
+  border-radius: 2px;
+  background: #e8a33d;
+  display: inline-block;
 }
 
 .add-task {
   display: flex;
   gap: 10px;
-  margin-bottom: 30px;
+  margin-bottom: 36px;
 }
 
 .add-task input {
   flex: 1;
-  padding: 12px;
-  border: none;
+  padding: 13px 16px;
+  border: 1px solid #2c2e35;
   border-radius: 8px;
-  font-size: 16px;
+  background: #1c1e24;
+  color: #f2f0eb;
+  font-family: "Inter", sans-serif;
+  font-size: 15px;
+  transition:
+    border-color 0.15s ease,
+    background 0.15s ease;
+}
+
+.add-task input::placeholder {
+  color: #6c6e76;
+}
+
+.add-task input:focus {
+  outline: none;
+  border-color: #e8a33d;
+  background: #202329;
 }
 
 button {
@@ -39,11 +85,28 @@ button {
   border-radius: 8px;
   padding: 10px 14px;
   cursor: pointer;
+  font-family: "Inter", sans-serif;
+  font-weight: 600;
+  transition:
+    transform 0.1s ease,
+    background 0.15s ease,
+    opacity 0.15s ease;
+}
+
+button:active {
+  transform: scale(0.97);
 }
 
 .add-task button {
-  background: white;
-  color: black;
+  background: #e8a33d;
+  color: #15161a;
+  padding: 0 22px;
+  font-size: 14px;
+  letter-spacing: 0.01em;
+}
+
+.add-task button:hover {
+  background: #f2b355;
 }
 
 .columns {
@@ -53,14 +116,40 @@ button {
 }
 
 .column {
-  background: #1c1c1c;
+  background: #1a1c22;
+  border: 1px solid #26282f;
+  border-top: 3px solid #3a3d46;
   border-radius: 12px;
-  padding: 20px;
-  min-height: 400px;
+  padding: 18px;
+  min-height: 420px;
+  transition:
+    border-color 0.15s ease,
+    background 0.15s ease;
+}
+
+.column:hover {
+  border-color: #33353d;
+}
+
+/* Give each of the three columns its own status color, in source order */
+.column:nth-child(1) {
+  border-top-color: #5d8da8;
+}
+.column:nth-child(2) {
+  border-top-color: #e8a33d;
+}
+.column:nth-child(3) {
+  border-top-color: #6fae8a;
 }
 
 .column h2 {
-  margin-top: 0;
+  margin: 2px 0 18px;
+  font-family: "JetBrains Mono", monospace;
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #8b8d94;
 }
 
 .tasks {
@@ -70,41 +159,65 @@ button {
 }
 
 .task {
-  background: #292929;
-  padding: 14px;
+  background: #21232a;
+  border: 1px solid #2a2c34;
+  border-left: 3px solid #3a3d46;
+  padding: 13px 14px;
   border-radius: 8px;
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 10px;
   cursor: grab;
+  font-size: 14px;
+  color: #ece9e2;
+  transition:
+    transform 0.12s ease,
+    border-color 0.12s ease,
+    background 0.12s ease;
 }
 
-/* .task-actions {
-  display: flex;
-  gap: 5px;
-} */
-
-/* .task-actions button {
-  padding: 5px 9px;
-  background: #444;
-  color: white;
+.task:hover {
+  background: #262832;
+  border-left-color: #e8a33d;
+  transform: translateX(2px);
 }
 
-.task-actions button:hover {
-  background: #555;
-} */
+.task:active {
+  cursor: grabbing;
+  transform: scale(0.99);
+}
+
+.task span {
+  overflow-wrap: anywhere;
+}
+
+.task svg {
+  flex-shrink: 0;
+  color: #55575f;
+}
 
 .delete-area {
-  margin: 5rem auto 0px;
-  width: 50px;
-  height: 50px;
-  border: 1px solid red;
-  background-color: #2b0505;
+  margin: 4rem auto 0;
+  width: 56px;
+  height: 56px;
+  border: 1px dashed #6b2b2b;
+  background-color: #1f1213;
+  border-radius: 12px;
   display: flex;
   justify-content: center;
   align-items: center;
-  color: red;
+  color: #d16565;
+  transition:
+    background 0.15s ease,
+    border-color 0.15s ease,
+    transform 0.15s ease;
+}
+
+.delete-area:hover {
+  background-color: #2a1416;
+  border-color: #d16565;
+  border-style: solid;
 }
 
 @media (max-width: 700px) {
