@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { v4 as uuidv4 } from "uuid"
 import { FaTrashAlt } from "react-icons/fa"
 import { RxDragHandleDots1 } from "react-icons/rx"
@@ -11,6 +11,55 @@ function App() {
 
   const [newTask, setNewTask] = useState("")
   const [draggedTask, setDraggedTask] = useState({})
+
+  const [width, setWidth] = useState(window.innerWidth)
+
+  function handleChangeWidth() {
+    setWidth(window.innerWidth)
+  }
+
+  useEffect(() => {
+    window.addEventListener("resize", handleChangeWidth)
+    return () => window.removeEventListener("resize", handleChangeWidth)
+  }, [])
+
+  const isMobile = width <= 768
+
+  function moveTaskBack(currentTask) {
+    const currentColumnIndex = columns.findIndex(
+      (column) => column.id === currentTask.status,
+    )
+
+    if (currentColumnIndex === 0) return
+
+    const previousColumn = columns[currentColumnIndex - 1]
+
+    setTasks(
+      tasks.map((task) => {
+        return task.id === currentTask.id
+          ? { ...task, status: previousColumn.id }
+          : task
+      }),
+    )
+  }
+
+  function moveTaskForward(currentTask) {
+    const currentColumnIndex = columns.findIndex(
+      (column) => column.id === currentTask.status,
+    )
+
+    if (currentColumnIndex === columns.length - 1) return
+
+    const nextColumn = columns[currentColumnIndex + 1]
+
+    setTasks(
+      tasks.map((task) => {
+        return task.id === currentTask.id
+          ? { ...task, status: nextColumn.id }
+          : task
+      }),
+    )
+  }
 
   function handleSubmitTask(e) {
     e.preventDefault()
@@ -68,7 +117,40 @@ function App() {
                     onDragStart={() => dragStartTask(task)}
                   >
                     <span>{task.title}</span>
-                    <RxDragHandleDots1 />
+                    <span className="task-move-controls">
+                      {isMobile ? (
+                        <>
+                          {columns.findIndex(
+                            (column) => column.id === task.status,
+                          ) === 0 ? (
+                            ""
+                          ) : (
+                            <button
+                              className="task-move-btn"
+                              onClick={() => moveTaskBack(task)}
+                            >
+                              ←
+                            </button>
+                          )}
+
+                          {columns.findIndex(
+                            (column) => column.id === task.status,
+                          ) ===
+                          columns.length - 1 ? (
+                            ""
+                          ) : (
+                            <button
+                              className="task-move-btn"
+                              onClick={() => moveTaskForward(task)}
+                            >
+                              →
+                            </button>
+                          )}
+                        </>
+                      ) : (
+                        <RxDragHandleDots1 />
+                      )}
+                    </span>
                   </div>
                 ))}
               </div>

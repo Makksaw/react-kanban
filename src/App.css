@@ -5,6 +5,7 @@
 }
 
 body {
+  user-select: none;
   margin: 0;
   font-family: "Inter", Arial, sans-serif;
   background: #15161a;
@@ -195,6 +196,51 @@ button:active {
 .task svg {
   flex-shrink: 0;
   color: #55575f;
+}
+
+.task-move-controls {
+  display: inline-flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 6px;
+}
+
+.task-move-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 28px;
+  height: 28px;
+  padding: 0;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 6px;
+  background: rgba(255, 255, 255, 0.06);
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 14px;
+  line-height: 1;
+  cursor: pointer;
+  transition:
+    background-color 0.15s ease,
+    border-color 0.15s ease,
+    color 0.15s ease,
+    transform 0.1s ease;
+}
+
+.task-move-btn:hover {
+  background: rgba(255, 255, 255, 0.12);
+  border-color: rgba(255, 255, 255, 0.24);
+  color: #fff;
+}
+
+.task-move-btn:active {
+  transform: scale(0.92);
+  background: rgba(255, 255, 255, 0.16);
+}
+
+.task-move-btn:focus-visible {
+  outline: 2px solid #f5a623;
+  outline-offset: 2px;
 }
 
 .delete-area {
